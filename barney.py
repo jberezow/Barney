@@ -1,5 +1,7 @@
+from actions.messages import it_begins
 import discord
 import asyncio
+from actions import *
 
 TOKEN = 'NDg1ODYxNzIzNjczNDYwNzQ4.XlBNig.9oH5OsJfyifj88ETvQgdAtxq2l4'
 
@@ -14,9 +16,8 @@ async def on_message(message):
 
     #Classic Halo Starting Bell
     if message.content.startswith('It Begins'):
-        channel = message.channel
-        msg = 'https://www.youtube.com/watch?v=ch8MzYclx5I'
-        await channel.send(msg)
+        loop = asyncio.get_event_loop()
+        task = loop.create_task(it_begins(message))
 
 
 @client.event
