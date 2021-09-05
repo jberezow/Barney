@@ -6,7 +6,8 @@ from actions import *
 from discord.ext import tasks
 from webscraping.scrape import komplett, microsoft, microsoft_halo
 
-TOKEN = 'NDg1ODYxNzIzNjczNDYwNzQ4.W4wb_Q.RPQyOSUXbeQuPmSvdneqqDsycPM'
+with open('token.txt', 'r') as file:
+    TOKEN = file.read()
 
 client = discord.Client()
 
