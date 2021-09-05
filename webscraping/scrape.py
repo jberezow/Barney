@@ -3,16 +3,19 @@ import bs4
 import lxml
 import requests
 import json
+import os
 
 def scrape(html_doc):
     soup = BeautifulSoup(html_doc, 'lxml')
     return soup
 
 def something_went_wrong(site_name):
+
     return(f"Something went wrong on {site_name}")
 
 # Gather Links
-f = r"C:\Users\jbere\OneDrive\Documents\projects\Barney\webscraping\xbox.json"
+
+f = r"./webscraping/xbox.json"
 with open(f) as json_file:
     sites = json.load(json_file)
 
