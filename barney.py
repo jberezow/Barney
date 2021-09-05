@@ -22,7 +22,7 @@ async def on_message(message):
         loop = asyncio.get_event_loop()
         task = loop.create_task(it_begins(message))
 
-@tasks.loop(seconds=30)
+@tasks.loop(seconds=60)
 async def stock_check():
     await client.wait_until_ready()
     channel = client.get_channel(703969989652381718)
@@ -34,8 +34,6 @@ async def stock_check():
         await channel.send(notification)
     else:
         pass
-        #await channel.send(f"Test alert {jon_id}")
-        #await channel.send(notification)
 
     push, notification = microsoft()
     if push:
@@ -43,8 +41,6 @@ async def stock_check():
         await channel.send(notification)
     else:
         pass
-        #await channel.send(f"Test alert {jon_id}")
-        #await channel.send(notification)
 
     push, notification = microsoft_halo()
     if push:
@@ -52,8 +48,6 @@ async def stock_check():
         await channel.send(notification)
     else:
         pass
-        #await channel.send(f"Test alert {jon_id}")
-        #await channel.send(notification)
 
 @client.event
 async def on_ready():
