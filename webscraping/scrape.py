@@ -1,9 +1,6 @@
 from bs4 import BeautifulSoup
-import bs4
-import lxml
 import requests
 import json
-import os
 
 def scrape(html_doc):
     soup = BeautifulSoup(html_doc, 'lxml')
@@ -86,7 +83,9 @@ def microsoft_halo():
         if availability == keyword:
             return(False, f"No restock on {site}: {site_url}")
         else:
-            site_message = f"Possible restock on {site}: {site_url}"
+            site_message = f"Possible restock on {site}: order button displayed {availability}. URL: {site_url}"
+            with open("content.html", "w") as file:
+                file.write(str(content))
             return(True, site_message)
 
     except:
