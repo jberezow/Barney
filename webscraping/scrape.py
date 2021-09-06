@@ -7,7 +7,6 @@ def scrape(html_doc):
     return soup
 
 def something_went_wrong(site_name):
-
     return(f"Something went wrong on {site_name}")
 
 # Gather Links
@@ -39,7 +38,7 @@ def komplett():
             return(True, site_message)
 
     except:
-        return(True, something_went_wrong())
+        return(True, something_went_wrong(site))
 
 def microsoft():
 
@@ -64,7 +63,7 @@ def microsoft():
             return(True, site_message)
 
     except:
-        return(True, something_went_wrong())
+        return(True, something_went_wrong(site))
 
 def microsoft_halo():
     site = 'microsoft_halo'
@@ -89,4 +88,4 @@ def microsoft_halo():
             return(True, site_message)
 
     except:
-        return(True, something_went_wrong())
+        return(True, something_went_wrong(site))
