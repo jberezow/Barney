@@ -38,6 +38,8 @@ def komplett():
             return(True, site_message)
 
     except:
+        with open("error.html", "a") as file:
+            file.write(str(content))
         return(True, something_went_wrong(site))
 
 def microsoft():
@@ -63,6 +65,8 @@ def microsoft():
             return(True, site_message)
 
     except:
+        with open("error.html", "a") as file:
+            file.write(str(content))
         return(True, something_went_wrong(site))
 
 def microsoft_halo():
@@ -88,4 +92,6 @@ def microsoft_halo():
             return(True, site_message)
 
     except:
+        with open("error.html", "a") as file:
+                file.write(str(content))
         return(True, something_went_wrong(site))

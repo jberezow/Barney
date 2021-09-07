@@ -28,12 +28,12 @@ async def stock_check(force_push=False):
     channel = client.get_channel(703969989652381718)
     jon_id = "<@365628982319906816>"
 
-    push, notification = komplett()
-    if push:
-        await channel.send(f"Alert {jon_id}")
-        await channel.send(notification)
-    else:
-        pass
+    #push, notification = komplett()
+    #if push:
+    #    await channel.send(f"Alert {jon_id}")
+    #    await channel.send(notification)
+    #else:
+    #    pass
 
     push, notification = microsoft()
     if push:
