@@ -22,7 +22,7 @@ async def on_message(message):
         loop = asyncio.get_event_loop()
         task = loop.create_task(it_begins(message))
 
-@tasks.loop(seconds=30)
+@tasks.loop(seconds=10)
 async def stock_check(force_push=False):
     await client.wait_until_ready()
     channel = client.get_channel(703969989652381718)
