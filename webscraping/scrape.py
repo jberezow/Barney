@@ -65,7 +65,7 @@ def microsoft():
             return(True, site_message)
 
     except:
-        with open("error.html", "a") as file:
+        with open("error.html", "w", encoding='utf8') as file:
             file.write(str(content))
         return(True, something_went_wrong(site))
 
@@ -87,7 +87,7 @@ def microsoft_halo():
             return(False, f"No restock on {site}: {site_url}")
         else:
             site_message = f"Possible restock on {site}: order button displayed {availability}. URL: {site_url}"
-            with open("content.html", "w") as file:
+            with open("content.html", "w", encoding='utf8') as file:
                 file.write(str(content))
             return(True, site_message)
 

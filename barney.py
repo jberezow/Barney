@@ -10,6 +10,8 @@ with open('token.txt', 'r') as file:
 
 client = discord.Client()
 
+check_seconds = 600
+
 @client.event
 async def on_message(message):
 
@@ -22,7 +24,19 @@ async def on_message(message):
         loop = asyncio.get_event_loop()
         task = loop.create_task(it_begins(message))
 
-@tasks.loop(seconds=10)
+    # Change Timer
+    if message.content.startswith('!change_stock_check_timer'):
+        channel = message.channel
+        if message.author.id == 365628982319906816:
+            check_seconds = int(message.content[26:])
+            msg = f'Changed timer to {check_seconds} seconds'
+            await channel.send(msg)
+        else:
+            scallywag = message.author.display_name
+            msg = f"Nice try {scallywag}, you're not the Jon"
+            await channel.send(msg)
+
+@tasks.loop(seconds=check_seconds)
 async def stock_check(force_push=False):
     await client.wait_until_ready()
     channel = client.get_channel(703969989652381718)
