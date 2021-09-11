@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import json
+from discord.ext import tasks
 
 def scrape(html_doc):
     soup = BeautifulSoup(html_doc, 'lxml')
@@ -95,3 +96,17 @@ def microsoft_halo():
         with open("error.html", "a") as file:
                 file.write(str(content))
         return(True, something_went_wrong(site))
+
+@tasks.loop(seconds=600)
+async def stock_check(client):
+    await client.wait_until_ready()
+    channel = client.get_channel(703969989652381718)
+    jon_id = "<@365628982319906816>"
+    print("Checking Sites")
+
+    websites = [microsoft, microsoft_halo]
+    for site in websites:
+        push, notification = site()
+        if push:
+            await channel.send(f"Alert {jon_id}")
+            await channel.send(notification)
