@@ -1,27 +1,18 @@
-from webscraping.scrape import stock_check
-
-async def change_stock_check_timer(client, message):
-    channel = message.channel
-    if message.author.id == 365628982319906816:
-        try:
-            new_time = message.content.split(" ")[1]
-            check_seconds = int(new_time)
-        except:
-            msg = f"Could not process number of seconds"
-            await channel.send(msg)
-        #stock_check.change_interval(check_seconds)
-        msg = f'Changed timer to {check_seconds} seconds'
-        await channel.send(msg)
-    else:
-        scallywag = message.author.display_name
-        msg = f"Nice try {scallywag}, you're not the Jon"
-        await channel.send(msg)
+# Add function definitions between dashed lines
+# ---------------------------------------------
 
 async def it_begins(client, message):
     channel = message.channel
     msg = 'https://www.youtube.com/watch?v=ch8MzYclx5I'
     await channel.send(msg)
 
+async def cushy_jobs(client, message):
+    channel = message.channel
+    msg = "You'll be given cushy jobs"
+
+# ---------------------------------------------
+
+# Main handler
 async def process_message(client, message):
     query_full = message.content[1:]
     query_keyword = query_full.split(" ")[0]
@@ -34,7 +25,9 @@ async def process_message(client, message):
     
     await response_function(client, message)
 
+# Dictionary of queries and response functions
+
 response_map = {
-    "change_timer": change_stock_check_timer,
-    "it_begins": it_begins
+    "it_begins": it_begins,
+    "What_about_us_braindead_slobs?": cushy_jobs
 }

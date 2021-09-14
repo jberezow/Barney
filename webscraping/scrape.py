@@ -81,7 +81,10 @@ def microsoft_halo():
 
     try:
         content_body = content.body
-        content_div5 = content_body.find_all("button", class_ = "BundleBuilderHeader-module__checkoutButton___3UyEq w-100 bg-light-green btn btn-primary")[0]
+        content_div5 = content_body.find_all(
+            "button", 
+            class_ = "BundleBuilderHeader-module__checkoutButton___3UyEq w-100 bg-light-green btn btn-primary"
+        )[0]
         availability = content_div5.contents[0]
 
         if availability == keyword:
@@ -97,12 +100,13 @@ def microsoft_halo():
                 file.write(str(content))
         return(True, something_went_wrong(site))
 
-@tasks.loop(seconds=600)
+check_seconds = 600
+
+@tasks.loop(seconds=check_seconds)
 async def stock_check(client):
     await client.wait_until_ready()
     channel = client.get_channel(703969989652381718)
     jon_id = "<@365628982319906816>"
-    print("Checking Sites")
 
     websites = [microsoft, microsoft_halo]
     for site in websites:
@@ -110,3 +114,39 @@ async def stock_check(client):
         if push:
             await channel.send(f"Alert {jon_id}")
             await channel.send(notification)
+
+async def change_stock_check_timer(client, message):
+    channel = message.channel
+    if message.author.id == 365628982319906816:
+        try:
+            new_time = message.content.split(" ")[1]
+            check_seconds = int(new_time)
+            #stock_check.change_interval(check_seconds)
+            msg = f'Changed timer to {check_seconds} seconds'
+        except:
+            msg = f"Could not process number of seconds"
+        await channel.send(msg)
+    else:
+        scallywag = message.author.display_name
+        msg = f"Nice try {scallywag}, you're not the Jon"
+        await channel.send(msg)
+
+async def start_stock_check(client, message):
+    stock_check.start(client)
+
+async def process_scrape(client, message):
+    query_full = message.content[1:]
+    query_keyword = query_full.split(" ")[0]
+    try:
+        response_function = response_map[query_keyword]
+    except:
+        error_warning = f"No prompt found for your query"
+        await message.channel.send(error_warning)
+        return
+    
+    await response_function(client, message)
+
+response_map = {
+    "start": start_stock_check,
+    "change_timer": change_stock_check_timer
+}
