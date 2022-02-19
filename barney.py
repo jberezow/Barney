@@ -1,14 +1,19 @@
-from actions.messages import it_begins
 import discord
 import asyncio
-import time
-from actions import *
-from discord.ext import tasks
-from webscraping.scrape import komplett, microsoft, microsoft_halo
+from webscraping.scrape import process_scrape, start_stock_check
+from actions.messages import process_message
+from actions.questions import process_question
 
-TOKEN = 'NDg1ODYxNzIzNjczNDYwNzQ4.XlBNig.9oH5OsJfyifj88ETvQgdAtxq2l4'
+with open('token.txt', 'r') as file:
+    TOKEN = file.read()
 
 client = discord.Client()
+
+event_dict = {
+    '!': process_message,
+    '#': process_scrape,
+    '?': process_question
+}
 
 @client.event
 async def on_message(message):
@@ -17,44 +22,22 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # Classic Halo Starting Bell
-    if message.content.startswith('It Begins'):
+    if message.content[0] == '!':
         loop = asyncio.get_event_loop()
-        task = loop.create_task(it_begins(message))
+        task = loop.create_task(process_message(client, message))
 
-@tasks.loop(seconds=60)
-async def stock_check():
-    await client.wait_until_ready()
-    channel = client.get_channel(703969989652381718)
-    jon_id = "<@365628982319906816>"
+    if message.content[0] == '#':
+        loop = asyncio.get_event_loop()
+        task = loop.create_task(process_scrape(client, message))
 
-    push, notification = komplett()
-    if push:
-        await channel.send(f"Alert {jon_id}")
-        await channel.send(notification)
-    else:
-        pass
-
-    push, notification = microsoft()
-    if push:
-        await channel.send(f"Alert {jon_id}")
-        await channel.send(notification)
-    else:
-        pass
-
-    push, notification = microsoft_halo()
-    if push:
-        await channel.send(f"Alert {jon_id}")
-        await channel.send(notification)
-    else:
-        pass
+    if message.content[0] == '?':
+        loop = asyncio.get_event_loop()
+        task = loop.create_task(process_question(client,message))
 
 @client.event
 async def on_ready():
     print("{} is now online".format(client.user.name))
     print("Client user id: {}".format(client.user.id))
 
-stock_check.start()
+start_stock_check(client, None)
 client.run(TOKEN)
-
-print("Test")
