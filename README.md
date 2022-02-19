@@ -1,5 +1,5 @@
 # Barney
-A simple Discord Bot. Mostly for learning the Discord API and making small tools for our server. We're also using it for Xbox re-stock notifications.
+A simple Discord Bot. Mostly for learning the Discord API and making small tools for our server.
 
 I use Jupyter notebooks to experiment with the API; that code is usually pretty half-baked. The directory structure is my first crack at using a proper Python design pattern for a personal project. That will slowly improve over time.
 
