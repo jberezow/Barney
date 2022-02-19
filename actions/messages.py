@@ -9,6 +9,7 @@ async def it_begins(client, message):
 async def cushy_jobs(client, message):
     channel = message.channel
     msg = "You'll be given cushy jobs"
+    await channel.send(msg)
 
 # ---------------------------------------------
 
