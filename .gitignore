@@ -3,3 +3,4 @@ token.txt
 .vscode/*
 *.pyc
 notebooks/.ipynb_checkpoints/
+hasura_secret.txt
