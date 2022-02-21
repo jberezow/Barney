@@ -1,4 +1,4 @@
-name: Barney
+name: barney
 channels:
   - anaconda
   - conda-forge
@@ -76,4 +76,10 @@ dependencies:
   - zlib=1.2.11=vc14h1cdd9ab_1
   - pip:
     - asyncio==3.4.3
-prefix: C:\Users\jbere\.conda\envs\Barney
+    - botocore==1.24.3
+    - gql==3.0.0
+    - graphql-core==3.2.0
+    - jmespath==0.10.0
+    - requests-toolbelt==0.9.1
+    - websockets==10.2
+prefix: C:\Users\jbere\.conda\envs\barney
