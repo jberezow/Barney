@@ -10,8 +10,11 @@ I am working to connect the bot to a simple GQL API on top of a small Postgres D
 **Details**
 
 BARNEY: Discord bot client
+
 MOE: Data manager (GQL api)
+
 ACTIONS: Server-side and client-side functions
+
 KEYS: Private folder for connection keys
 
 Barney is hosted on an EC2 Amazon Linux instance on AWS. One mid-term action item is to create a deployment pipeline so Barney can be upgraded seamlessly with minimal downtime.
