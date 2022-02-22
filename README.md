@@ -9,7 +9,10 @@ I am working to connect the bot to a simple GQL API on top of a small Postgres D
 
 **Details**
 
-I use Jupyter notebooks to experiment with the API; that code is usually pretty half-baked. The directory structure is my first crack at using a proper Python design pattern for a personal project. That will slowly improve over time.
+BARNEY: Discord bot client
+MOE: Data manager (GQL api)
+ACTIONS: Server-side and client-side functions
+KEYS: Private folder for connection keys
 
 Barney is hosted on an EC2 Amazon Linux instance on AWS. One mid-term action item is to create a deployment pipeline so Barney can be upgraded seamlessly with minimal downtime.
 
