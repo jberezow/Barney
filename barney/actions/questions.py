@@ -1,5 +1,5 @@
 # Main handler
-async def process_question(client, message):
+async def process_question(message):
     query_full = message.content[1:]
     processed_query = query_full.replace(' ','+')
     channel = message.channel
