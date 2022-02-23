@@ -3,8 +3,14 @@
 
 async def it_begins(message):
     channel = message.channel
-    msg = 'https://www.youtube.com/watch?v=ch8MzYclx5I'
-    await channel.send(msg)
+    response = 'https://www.youtube.com/watch?v=ch8MzYclx5I'
+    await channel.send(response)
+
+async def hello(message):
+    channel = message.channel
+    user = message.author
+    response = f'Hello {user.name}'
+    await channel.send(response)
 
 # ---------------------------------------------
 
@@ -24,5 +30,6 @@ async def process_message(message):
 # Dictionary of queries and response functions
 
 response_map = {
-    "it_begins": it_begins
+    "it_begins": it_begins,
+    "hello": hello
 }

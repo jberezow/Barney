@@ -1,8 +1,8 @@
 import discord
 import asyncio
 
-from actions.messages import process_message
-from actions.questions import process_question
+from barney.actions.messages import process_message
+from barney.actions.questions import process_question
 
 barney = discord.Client()
 
@@ -20,11 +20,11 @@ async def on_message(message):
 
     if message.content[0] == '!':
         loop = asyncio.get_event_loop()
-        task = loop.create_task(process_message(barney,message))
+        task = loop.create_task(process_message(message))
 
     if message.content[0] == '?':
         loop = asyncio.get_event_loop()
-        task = loop.create_task(process_question(barney,message))
+        task = loop.create_task(process_question(message))
 
 @barney.event
 async def on_ready():
