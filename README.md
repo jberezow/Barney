@@ -1,6 +1,8 @@
 # Barney
 A simple Discord Bot. Mostly for learning the Discord API and making small tools for our server.
 
+Named after a classic Simpsons legend.
+
 **PROJECT UPDATE 02/2022**
 
 I am working to connect the bot to a simple GQL API on top of a small Postgres DB for collecting server statistics. This is to work towards having data for running NLP experiments in the hopes of making a basic chatbot.
