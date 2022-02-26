@@ -41,9 +41,7 @@ class Tavern():
                 "name": name
             }
         )
-        async with ClientSession() as session:
-            client = await self.get_client(session)
-            response = await client.query(request=order)
+        response = await self.make_query(order)
         return response
     
     async def upsertChannel(self, id: str, name: str):
@@ -70,7 +68,7 @@ class Tavern():
                 "name": name
             }
         )
-        response = self.make_query(order)
+        response = await self.make_query(order)
         return response
 
 moe = Tavern()
