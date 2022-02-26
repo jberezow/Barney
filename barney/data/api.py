@@ -5,10 +5,14 @@ from aiographql.client import GraphQLClient, GraphQLRequest
 from aiohttp import ClientSession, TCPConnector
 
 class Tavern():
-    db_client = GraphQLClient(
-        endpoint=GQL_ENDPOINT,
-        headers={'x-hasura-admin-secret': HASURA_SECRET}
-    )
+    
+    async def get_client(self, session):
+        db_client = GraphQLClient(
+            endpoint=GQL_ENDPOINT,
+            headers={'x-hasura-admin-secret': HASURA_SECRET},
+            session=session
+        )
+        return db_client
 
     async def upsertUser(self, id: str, name: str):
         connector = TCPConnector(
@@ -37,15 +41,12 @@ class Tavern():
                 "name": name
             }
         )
-        session = ClientSession(connector=connector)
-        response = await self.db_client.query(request=order,session=session)
-        await session.close()
+        async with ClientSession() as session:
+            client = await self.get_client(session)
+            response = await client.query(request=order)
         return response
     
     async def upsertChannel(self, id: str, name: str):
-        connector = TCPConnector(
-            force_close=True, limit=1, enable_cleanup_closed=True
-        )
         order = GraphQLRequest(
             query = """
             mutation UpsertChannel ($id: String, $name: String) {
@@ -69,9 +70,9 @@ class Tavern():
                 "name": name
             }
         )
-        session = ClientSession(connector=connector)
-        response = await self.db_client.query(request=order,session=session)
-        await session.close()
+        async with ClientSession() as session:
+            client = await self.get_client(session)
+            response = await client.query(request=order)
         return response
 
 moe = Tavern()

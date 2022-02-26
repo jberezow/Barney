@@ -37,6 +37,7 @@ async def sync_users():
         id = str(user.id)
         name = str(user.name)
         await moe.upsertUser(id,name)
+        print(f"User {name} updated in database")
 
 async def sync_channels():
     for channel in barney_bot.get_all_channels():
@@ -50,5 +51,5 @@ async def on_ready():
     print("Client user id: {}".format(barney_bot.user.id))
     loop = asyncio.get_event_loop()
     task = loop.create_task(sync_users())
-    task2 = loop.create_task(sync_channels())
+    #task2 = loop.create_task(sync_channels())
     
