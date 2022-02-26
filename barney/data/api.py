@@ -1,3 +1,4 @@
+from urllib import response
 from gql import gql, Client
 from gql.transport.aiohttp import AsyncTransport
 from barney import GQL_ENDPOINT, HASURA_SECRET
@@ -6,18 +7,17 @@ from aiohttp import ClientSession, TCPConnector
 
 class Tavern():
     
-    async def get_client(self, session):
-        db_client = GraphQLClient(
-            endpoint=GQL_ENDPOINT,
-            headers={'x-hasura-admin-secret': HASURA_SECRET},
-            session=session
-        )
-        return db_client
+    async def make_query(self, query):
+        async with ClientSession() as session:
+            db_client = GraphQLClient(
+                endpoint=GQL_ENDPOINT,
+                headers={'x-hasura-admin-secret': HASURA_SECRET},
+                session=session
+            )
+            response = await db_client.query(request=query)
+        return response
 
     async def upsertUser(self, id: str, name: str):
-        connector = TCPConnector(
-            force_close=True, limit=1, enable_cleanup_closed=True
-        )
         order = GraphQLRequest(
             query = """
             mutation UpsertUser ($id: String, $name: String) {
@@ -70,9 +70,7 @@ class Tavern():
                 "name": name
             }
         )
-        async with ClientSession() as session:
-            client = await self.get_client(session)
-            response = await client.query(request=order)
+        response = self.make_query(order)
         return response
 
 moe = Tavern()

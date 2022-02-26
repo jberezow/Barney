@@ -44,12 +44,13 @@ async def sync_channels():
         id = str(channel.id)
         name = str(channel.name)
         await moe.upsertChannel(id,name)
+        print(f"Channel {name} updated in database")
 
 @barney_bot.event
 async def on_ready():
     print("{} is now online".format(barney_bot.user.name))
     print("Client user id: {}".format(barney_bot.user.id))
     loop = asyncio.get_event_loop()
-    task = loop.create_task(sync_users())
-    #task2 = loop.create_task(sync_channels())
+    #task = loop.create_task(sync_users())
+    task2 = loop.create_task(sync_channels())
     
