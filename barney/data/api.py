@@ -44,17 +44,45 @@ class Tavern():
         response = await self.make_query(order)
         return response
     
-    async def upsertChannel(self, id: str, name: str):
+    async def upsertChannel(self, id: str, name: str, category_id: str):
         order = GraphQLRequest(
             query = """
-            mutation UpsertChannel ($id: String, $name: String) {
+            mutation UpsertChannel ($id: String, $name: String, $category_id: String) {
                 insert_channels_one(
+                    object: {
+                        id: $id, 
+                        name: $name,
+                        category_id: $category_id
+                    }, 
+                    on_conflict: {
+                        constraint: channels_pkey, 
+                        update_columns: [name, category_id]
+                    }
+                ) 
+                { 
+                    id
+                }
+            }
+        """,
+            variables = {
+                "id": id,
+                "name": name
+            }
+        )
+        response = await self.make_query(order)
+        return response
+    
+    async def upsertCategory(self, id: str, name: str):
+        order = GraphQLRequest(
+            query = """
+            mutation UpsertCategory ($id: String, $name: String) {
+                insert_category_one(
                     object: {
                         id: $id, 
                         name: $name
                     }, 
                     on_conflict: {
-                        constraint: channels_pkey, 
+                        constraint: category_pkey, 
                         update_columns: name
                     }
                 ) 
