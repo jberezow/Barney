@@ -66,7 +66,8 @@ class Tavern():
         """,
             variables = {
                 "id": id,
-                "name": name
+                "name": name,
+                "category_id": category_id
             }
         )
         response = await self.make_query(order)
@@ -94,6 +95,48 @@ class Tavern():
             variables = {
                 "id": id,
                 "name": name
+            }
+        )
+        response = await self.make_query(order)
+        return response
+
+    async def allUsers(self):
+        order = GraphQLRequest(
+            query = """
+            query AllUsers {
+                lads {
+                    id
+                    name
+                    wallet
+                }
+            }
+        """
+        )
+        response = await self.make_query(order)
+        return response
+
+    async def makePayment(self, user, amount):
+        order = GraphQLRequest(
+            query = """
+            mutation Payment ($user: String, $amount: float8) {
+                update_lads(
+                    _set: {
+                        wallet: $amount
+                    }, 
+                    where: {
+                        id: {
+                            _eq: $user
+                        }
+                    }
+                ) 
+                {
+                    affected_rows
+                }
+            }
+        """,
+            variables = {
+                "user": user,
+                "amount": amount
             }
         )
         response = await self.make_query(order)
