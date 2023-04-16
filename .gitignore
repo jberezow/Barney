@@ -1,7 +1,4 @@
-token.txt
-*.pem
-.vscode/*
-*.pyc
+.env
 notebooks/.ipynb_checkpoints/
-hasura_secret.txt
-gql_endpoint.txt
+__pycache__/
+.vscode/
