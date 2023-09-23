@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 # Load the API keys from the .env file
 load_dotenv()
-DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+BARNEY_TOKEN = os.getenv('BARNEY_TOKEN')
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 # Initialize the OpenAI API
@@ -21,14 +21,14 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 
 async def get_gpt_response(prompt):
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=[
-            {"role": "system", "content": "Pretend you are the character Barney Gumble from the Simpsons."},
+            {"role": "system", "content": "Pretend you are the character Barney Gumble from the Simpsons. Please be aloof in presentation, but surprisingly insightful in terms of content. Please limit your responses to 250 tokens."},
             {"role": "user", "content": prompt},
         ],
-        max_tokens=100,
+        max_tokens=1000,
         n=1,
-        temperature=0.7,
+        temperature=0.8,
     )
 
     return response.choices[0].message['content']
@@ -51,4 +51,4 @@ async def on_message(message):
 
 # Run the bot
 if __name__ == "__main__":
-    bot.run(DISCORD_TOKEN)
+    bot.run(BARNEY_TOKEN)
